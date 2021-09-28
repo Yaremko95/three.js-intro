@@ -53,4 +53,18 @@ const renderer = new THREE.WebGLRenderer({
   canvas: canvas,
 });
 renderer.setSize(sizes.width, sizes.height);
-renderer.render(scene, camera);
+
+const clock = new THREE.Clock();
+
+const tick = () => {
+  const elapsedTime = clock.getElapsedTime();
+  group.children.forEach((child) => {
+    child.rotation.x = elapsedTime * Math.PI * 1;
+  });
+  group.position.y = Math.sin(elapsedTime);
+  group.position.x = Math.cos(elapsedTime);
+  renderer.render(scene, camera);
+  window.requestAnimationFrame(tick);
+};
+
+tick();
